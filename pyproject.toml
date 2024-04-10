@@ -1,0 +1,14 @@
+[tool.ruff]
+lint.select = ["E", "F", "I", "ANN", "PT"]
+lint.ignore = ["ANN101", "ANN102", "ANN002", "ANN003", "ANN401"]
+line-length = 120
+target-version = "py311"
+fix = true
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
+follow_imports = "silent"
+packages = [
+    'payout_calculator'
+]
