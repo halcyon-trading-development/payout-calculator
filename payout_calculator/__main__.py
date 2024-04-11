@@ -7,7 +7,7 @@ from currency_converter import ECB_URL, CurrencyConverter
 
 def profit_split(split: str) -> float:
     "Take `split` as a string and convert to percentage."
-    converted = float(split) if "." in split else int(split)
+    converted = float(split)
     if converted < 0 or converted > 100:
         raise ValueError
 
@@ -17,14 +17,14 @@ def profit_split(split: str) -> float:
 def print_args(args: Namespace) -> None:
     "Print all the command line arguments."
     print(f"Amount: {args.amount}")
-    print(f"Profit split: {int(args.split * 100)}")
+    print(f"Profit split: {round(args.split * 100, 2)}")
     print(f"Convert from: {args.convert_from}")
     print(f"Convert to: {args.convert_to}")
 
 
 def main() -> None:
     parser = ArgumentParser()
-    parser.add_argument("-a", "--amount", type=int, required=True, help="The amount before the profit split.")
+    parser.add_argument("-a", "--amount", type=float, required=True, help="The amount before the profit split.")
     parser.add_argument(
         "-s", "--split", type=profit_split, default="80", help="The profit split as a value between 0-100."
     )
@@ -43,6 +43,7 @@ def main() -> None:
     print_args(args)
 
     after_profit_split = args.amount * args.split
+    print(f"After split: {after_profit_split}")
 
     if args.convert_from != args.convert_to:
         final = c.convert(after_profit_split, args.convert_from, args.convert_to)
